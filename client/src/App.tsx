@@ -6,6 +6,7 @@ import SignupPage from "./pages/SignupPage";
 import DashboardPage from "./pages/DashboardPage";
 import MyResumesPage from "./pages/MyResumesPage";
 import ResumeBuilderPage from "./pages/ResumeBuilderPage";
+import ATSAnalyzer from "./pages/ATSAnalyzer";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 
@@ -41,6 +42,16 @@ function App() {
         element={
           <ProtectedRoute>
             <ResumeBuilderPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* ✅ Add here */}
+      <Route
+        path="/dashboard/ats-analyzer"
+        element={
+          <ProtectedRoute>
+            <ATSAnalyzer />
           </ProtectedRoute>
         }
       />

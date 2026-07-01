@@ -1,46 +1,60 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY!,
+const apiKey = process.env.GEMINI_API_KEY;
+
+if (!apiKey) {
+  throw new Error("GEMINI_API_KEY is missing in .env");
+}
+
+const genAI = new GoogleGenerativeAI(apiKey);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.5-flash",
 });
 
-export const generateContent = async (
-  prompt: string
-): Promise<string> => {
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-  });
-
-  return response.text ?? "";
-};
-
-export const improveResume = async (
-  resumeText: string
-): Promise<string> => {
+export const generateATSSuggestions = async (
+  analysis: any
+) => {
   const prompt = `
-You are an expert Resume Writer and ATS Optimization Specialist.
+You are an expert ATS Resume Reviewer.
 
-Improve the following resume.
+Return ONLY valid JSON.
 
-Instructions:
-- Improve grammar and wording.
-- Rewrite weak bullet points using strong action verbs.
-- Make the resume ATS-friendly.
-- Keep the original meaning.
-- Do NOT add fake experience, skills, projects, or certifications.
-- Format the output in clean Markdown.
-- Return ONLY the improved resume.
+Do not use markdown.
+Do not wrap the response inside \`\`\`.
 
-Resume:
+ATS Report:
+${JSON.stringify(analysis, null, 2)}
 
-${resumeText}
+Return JSON in this exact format:
+
+{
+  "summary": "",
+  "strengths": [],
+  "improvements": [],
+  "priority": ""
+}
 `;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-  });
+  const result = await model.generateContent(prompt);
 
-  return response.text ?? "";
+  const text = result.response.text();
+
+  try {
+    const cleaned = text
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    return JSON.parse(cleaned);
+  } catch (error) {
+    console.error("Gemini Raw Response:", text);
+
+    return {
+      summary: "Unable to generate AI suggestions.",
+      strengths: [],
+      improvements: [],
+      priority: "Medium",
+    };
+  }
 };

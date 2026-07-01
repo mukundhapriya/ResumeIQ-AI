@@ -16,10 +16,13 @@
     "axios": "^1.18.1",
     "framer-motion": "^12.42.0",
     "html2pdf.js": "^0.14.0",
+    "jspdf": "^4.2.1",
+    "lucide-react": "^1.22.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-hook-form": "^7.80.0",
     "react-router-dom": "^7.18.0",
+    "recharts": "^3.9.1",
     "tailwindcss": "^4.3.2",
     "zod": "^4.4.3"
   },

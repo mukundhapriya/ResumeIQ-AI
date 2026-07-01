@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { generateContent } from "../services/gemini.service";
-
+import { generateATSSuggestions } from "../services/gemini.service";
 export const analyzeATS = async (
   req: Request,
   res: Response
@@ -31,7 +30,7 @@ Resume:
 ${resume}
 `;
 
-    const analysis = await generateContent(prompt);
+    const analysis = await generateATSSuggestions(prompt);
 
     return res.status(200).json({
       success: true,
@@ -80,7 +79,7 @@ Resume:
 ${resumeText}
 `;
 
-    const improvedResume = await generateContent(prompt);
+    const improvedResume = await generateATSSuggestions(prompt);
 
     return res.status(200).json({
       success: true,
@@ -131,7 +130,7 @@ Instructions:
 - Return only the summary.
 `;
 
-    const summary = await generateContent(prompt);
+    const summary = await generateATSSuggestions(prompt);
 
     return res.status(200).json({
       success: true,
@@ -194,7 +193,7 @@ Instructions:
 - Return only the bullet points.
 `;
 
-    const description = await generateContent(prompt);
+    const description = await generateATSSuggestions(prompt);
 
     return res.status(200).json({
       success: true,
@@ -265,7 +264,7 @@ Instructions:
 - Return only the cover letter.
 `;
 
-    const coverLetter = await generateContent(prompt);
+    const coverLetter = await generateATSSuggestions(prompt);
 
     return res.status(200).json({
       success: true,

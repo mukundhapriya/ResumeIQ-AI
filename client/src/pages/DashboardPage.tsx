@@ -1,4 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import {
+  FileText,
+  ScanSearch,
+  Sparkles,
+  ArrowRight,
+} from "lucide-react";
+
 import DashboardNavbar from "../components/layout/DashboardNavbar";
 import { useAuth } from "../context/AuthContext";
 
@@ -22,37 +29,62 @@ const DashboardPage = () => {
             {/* Resume Builder */}
             <div
               onClick={() => navigate("/dashboard/resumes")}
-              className="cursor-pointer rounded-xl bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg"
+              className="group cursor-pointer rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 p-6 text-white shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl"
             >
-              <h2 className="text-xl font-semibold">
+              <div className="flex items-center justify-between">
+                <FileText size={42} />
+                <ArrowRight className="transition-transform group-hover:translate-x-2" />
+              </div>
+
+              <h2 className="mt-8 text-2xl font-bold">
                 Resume Builder
               </h2>
 
-              <p className="mt-2 text-slate-600">
-                Create professional ATS-friendly resumes.
+              <p className="mt-3 text-blue-100">
+                Create professional ATS-friendly resumes with live preview and
+                AI assistance.
               </p>
             </div>
 
             {/* ATS Analyzer */}
-            <div className="rounded-xl bg-white p-6 shadow">
-              <h2 className="text-xl font-semibold">
+            <div
+              onClick={() => navigate("/dashboard/ats-analyzer")}
+              className="group cursor-pointer rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-6 text-white shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl"
+            >
+              <div className="flex items-center justify-between">
+                <ScanSearch size={42} />
+                <ArrowRight className="transition-transform group-hover:translate-x-2" />
+              </div>
+
+              <h2 className="mt-8 text-2xl font-bold">
                 ATS Analyzer
               </h2>
 
-              <p className="mt-2 text-slate-600">
-                Analyze resume ATS compatibility.
+              <p className="mt-3 text-emerald-100">
+                Upload your resume and receive ATS score, skill gap analysis,
+                and AI-powered suggestions.
               </p>
             </div>
 
             {/* AI Tools */}
-            <div className="rounded-xl bg-white p-6 shadow">
-              <h2 className="text-xl font-semibold">
+            <div className="group rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 p-6 text-white shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl">
+              <div className="flex items-center justify-between">
+                <Sparkles size={42} />
+                <ArrowRight className="opacity-50" />
+              </div>
+
+              <h2 className="mt-8 text-2xl font-bold">
                 AI Tools
               </h2>
 
-              <p className="mt-2 text-slate-600">
-                Improve resumes using Google Gemini AI.
+              <p className="mt-3 text-violet-100">
+                Enhance resumes with Google Gemini AI, optimize content, and
+                generate professional improvements.
               </p>
+
+              <span className="mt-5 inline-block rounded-full bg-white/20 px-3 py-1 text-sm">
+                Coming Soon
+              </span>
             </div>
           </div>
         </div>

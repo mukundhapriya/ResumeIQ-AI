@@ -3,6 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import morgan from "morgan";
+import atsRoutes from "./routes/ats.routes";
+
 
 import routes from "./routes";
 
@@ -33,5 +35,7 @@ app.get("/", (_req, res) => {
     message: "ResumeIQ AI Backend Running",
   });
 });
+
+app.use("/api/ats", atsRoutes);
 
 export default app;
