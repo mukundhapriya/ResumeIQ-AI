@@ -7,6 +7,7 @@ import {
 import toast from "react-hot-toast";
 
 import { analyzeResume } from "../../services/ats.service";
+import type { ATSAnalysisResult } from "../../types/ats";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 

@@ -53,6 +53,7 @@ export interface ResumeContent {
   projects: Project[];
   skills: Skill[];
   certifications: Certification[];
+  achievements: Achievement[];
 }
 
 export interface Resume {

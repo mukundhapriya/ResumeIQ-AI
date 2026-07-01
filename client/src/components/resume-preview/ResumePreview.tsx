@@ -20,7 +20,6 @@ interface Props {
   certifications: Certification[];
   achievements: Achievement[];
 }
-
 const ResumePreview = ({
   title,
   personalInfo,
