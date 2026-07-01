@@ -4,13 +4,14 @@ import {
   FileText,
   Trash2,
 } from "lucide-react";
+import toast from "react-hot-toast";
 
 import { analyzeResume } from "../../services/ats.service";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 interface Props {
-  onAnalysisComplete: (data: any) => void;
+  onAnalysisComplete: (data: ATSAnalysisResult) => void;
 }
 
 const ATSUploadForm = ({
@@ -26,19 +27,23 @@ const ATSUploadForm = ({
   const [loading, setLoading] = useState(false);
 
   const validateFile = (selectedFile: File) => {
-    if (selectedFile.type !== "application/pdf") {
-      setError("Only PDF files are allowed.");
-      return false;
-    }
+  if (selectedFile.type !== "application/pdf") {
+    const message = "Only PDF files are allowed.";
+    setError(message);
+    toast.error(message);
+    return false;
+  }
 
-    if (selectedFile.size > MAX_FILE_SIZE) {
-      setError("File size must be less than 5 MB.");
-      return false;
-    }
+  if (selectedFile.size > MAX_FILE_SIZE) {
+    const message = "File size must be less than 5 MB.";
+    setError(message);
+    toast.error(message);
+    return false;
+  }
 
-    setError("");
-    return true;
-  };
+  setError("");
+  return true;
+};
 
   const handleFile = (selectedFile: File) => {
     if (!validateFile(selectedFile)) return;
@@ -65,27 +70,39 @@ const ATSUploadForm = ({
   };
 
   const handleAnalyze = async () => {
-    if (!file || !jobDescription.trim()) return;
+  if (!file) {
+    toast.error("Please upload a resume.");
+    return;
+  }
 
-    try {
-      setLoading(true);
-      setError("");
+  if (!jobDescription.trim()) {
+    toast.error("Please enter the job description.");
+    return;
+  }
 
-      const data = await analyzeResume(
-        file,
-        jobDescription
-      );
+  try {
+    setLoading(true);
+    setError("");
 
-      onAnalysisComplete(data);
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.message ||
-          "Failed to analyze resume."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+    const data = await analyzeResume(
+      file,
+      jobDescription
+    );
+
+    onAnalysisComplete(data);
+
+    toast.success("Resume analyzed successfully!");
+  } catch (err: any) {
+    const message =
+      err?.response?.data?.message ||
+      "Failed to analyze resume.";
+
+    setError(message);
+    toast.error(message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="rounded-2xl bg-white p-8 shadow-lg">
