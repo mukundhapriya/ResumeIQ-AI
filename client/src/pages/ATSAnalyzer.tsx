@@ -32,22 +32,17 @@ const ATSAnalyzer = () => {
 
         {/* Upload Form */}
         <ATSUploadForm
-          onAnalysisComplete={setAnalysis}
-        />
+        onAnalysisComplete={(data) => {
+        console.log("Analysis received:", data);
+         setAnalysis(data);
+       }}
+/>
 
         {/* ATS Score Cards */}
         {analysis && (
-  <>
-    <ATSOverview analysis={analysis} />
-
-    <ATSScoreCards analysis={analysis} />
-
-    <ATSCharts analysis={analysis} />
-
-    <SkillGapCards analysis={analysis} />
-
-    <AISuggestionsCard analysis={analysis} />
-  </>
+  <pre style={{ whiteSpace: "pre-wrap", background: "#000", color: "#fff", padding: "20px" }}>
+    {JSON.stringify(analysis, null, 2)}
+  </pre>
 )}
       </div>
     </div>

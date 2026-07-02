@@ -90,7 +90,7 @@ const ATSUploadForm = ({
       jobDescription
     );
 
-    onAnalysisComplete(data.data);
+    onAnalysisComplete(data);
 
     toast.success("Resume analyzed successfully!");
   } catch (err: any) {
