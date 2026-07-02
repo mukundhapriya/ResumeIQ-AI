@@ -13,7 +13,7 @@ export const analyzeResume = async (
   formData.append("jobDescription", jobDescription);
 
   const response = await axios.post<ATSApiResponse>(
-    `${API}/api/ats/analyze`,
+    `${API}/ats/analyze`,   // ✅ remove extra /api
     formData,
     {
       headers: {
