@@ -52,8 +52,10 @@ const experienceMatch =
     experienceMatch,
     resumeText,
   });
-  const aiSuggestions =
-  await generateATSSuggestions({
+  let aiSuggestions;
+
+try {
+  aiSuggestions = await generateATSSuggestions({
     weightedATS,
     skillGap,
     educationMatch,
@@ -61,6 +63,17 @@ const experienceMatch =
     matchedKeywords: score.matchedKeywords,
     missingKeywords: score.missingKeywords,
   });
+} catch (error) {
+  console.error("Gemini Error:", error);
+
+  aiSuggestions = {
+    summary:
+      "AI suggestions are temporarily unavailable. Please try again later.",
+    strengths: [],
+    improvements: [],
+    priority: "Medium",
+  };
+}
 
 return {
   resumeText,
